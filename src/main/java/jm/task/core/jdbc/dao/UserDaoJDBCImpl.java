@@ -10,6 +10,14 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
+        String queryString ="CREATE TABLE `pre_project_1_1_3`.`users` (\n" +
+                "  `ID` INT NOT NULL AUTO_INCREMENT,\n" +
+                "  `NAME` VARCHAR(45) NOT NULL,\n" +
+                "  `LAST_NAME` VARCHAR(45) NOT NULL,\n" +
+                "  `AGE` INT(3) NOT NULL,\n" +
+                "        PRIMARY KEY (`ID`),\n" +
+                "        UNIQUE INDEX `idUsers_UNIQUE` (`ID` ASC) VISIBLE);";
+
 
     }
 

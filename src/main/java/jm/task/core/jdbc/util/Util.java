@@ -3,24 +3,20 @@ package jm.task.core.jdbc.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Util {
-
+    private static Connection connection;
 
     // Connect to MySQL
-    public static Connection getMySQLConnection() throws SQLException {
-        String hostName = "localhost";
-        String dbName = "pre_project_1_1_3";
-        String userName = "root";
-        String password = "root";
-
-        return getMySQLConnection(hostName, dbName, userName, password);
-    }
-
-    public static Connection getMySQLConnection(String hostName, String dbName,
-                                                String userName, String password) throws SQLException {
-        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
-        return DriverManager.getConnection(connectionURL, userName,
-                password);
+    public static Connection getMySQLConnection() {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pre_project_1_1_3", "root",
+                "root")) {
+            System.out.println("Соединение с БД Установлено");
+        } catch (SQLException e) {
+            System.out.println("При установке соединения возникла исключительная ситуация");
+            e.printStackTrace();
+        }
+        return connection;
     }
 }
