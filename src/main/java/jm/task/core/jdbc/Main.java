@@ -8,10 +8,8 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-       /* Util.getMySQLConnection();*/
-        UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-        //userDaoJDBC.createUsersTable();
-        userDaoJDBC.dropUsersTable();
+        UserDaoJDBCImpl.getINSTANCE().dropUsersTable();
+        UserDaoJDBCImpl.getINSTANCE().createUsersTable();
 
 
     }
