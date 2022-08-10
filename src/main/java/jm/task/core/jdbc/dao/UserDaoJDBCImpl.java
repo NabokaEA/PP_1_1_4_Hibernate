@@ -20,6 +20,7 @@ public class UserDaoJDBCImpl implements UserDao {
             "        PRIMARY KEY (`ID`),\n" +
             "        UNIQUE INDEX `idUsers_UNIQUE` (`ID` ASC) VISIBLE);";
     private static final String dropUsersTableSQL = "DROP TABLE IF EXISTS `pre_project_1_1_3`.`users`;";
+    private static final String saveUserSQL = "INSERT INTO users (NAME, LAST_NAME, AGE) values (?,?,?)";
     private static final String removeUserByIdSQL = "";
     private static final String getAllUsersSQL = "";
     private static final String cleanUsersTableSQL = "";
@@ -48,7 +49,15 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-
+        try (Connection connection = Util.getMySQLConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(saveUserSQL)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void removeUserById(long id) {
