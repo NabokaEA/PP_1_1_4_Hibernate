@@ -39,13 +39,12 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() throws SQLException {
-        String queryString = "DROP TABLE IF EXISTS `pre_project_1_1_3`.`users`;";
-        Boolean executeResult;
-        try (Statement statement = Util.getMySQLConnection().createStatement()) {
-            executeResult = statement.execute(queryString);
+        try (Connection connection = Util.getMySQLConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(dropUsersTableSQL);) {
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        System.out.println(executeResult);
-
     }
 
     public void saveUser(String name, String lastName, byte age) {
