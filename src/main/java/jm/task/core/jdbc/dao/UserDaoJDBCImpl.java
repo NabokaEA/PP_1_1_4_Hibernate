@@ -5,7 +5,6 @@ import jm.task.core.jdbc.util.Util;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
@@ -34,8 +33,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Connection connection = Util.getMySQLConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USERS_TABLE_SQL)) {
-            preparedStatement.execute();
+             Statement statement = connection.createStatement()) {
+            statement.execute(CREATE_USERS_TABLE_SQL);
         } catch (SQLException e) {
             throw new DaoException(e.getMessage(), e);
         }
