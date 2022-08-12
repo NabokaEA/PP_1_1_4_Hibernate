@@ -37,16 +37,16 @@ public class UserDaoJDBCImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USERS_TABLE_SQL)) {
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
     }
 
-    public void dropUsersTable() {
+    public void dropUsersTable()  {
         try (Connection connection = Util.getMySQLConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DROP_USERS_TABLE_SQL)) {
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
     }
 
@@ -58,7 +58,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setByte(3, age);
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
     }
 
@@ -68,7 +68,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
     }
 
@@ -87,7 +87,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
         return users;
     }
@@ -97,7 +97,7 @@ public class UserDaoJDBCImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(CLEAN_USERS_TABLE_SQL)) {
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            throw new DaoException(e.getMessage(), e);
         }
     }
 }
