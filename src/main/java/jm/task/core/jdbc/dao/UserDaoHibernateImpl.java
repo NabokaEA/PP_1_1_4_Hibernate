@@ -19,7 +19,7 @@ public class UserDaoHibernateImpl implements UserDao {
             "        PRIMARY KEY (`ID`),\n" +
             "        UNIQUE INDEX `idUsers_UNIQUE` (`ID` ASC) VISIBLE);";
     private static final String DROP_USERS_TABLE_SQL = "DROP TABLE IF EXISTS `pre_project_1_1_3`.`users`;";
-    private static final String GET_ALL_USERS_SQL = "SELECT ID, NAME, LAST_NAME, AGE FROM users;";
+    private static final String GET_ALL_USERS_SQL = "SELECT id, NAME, LAST_NAME, AGE FROM users;";
 
     public static UserDaoHibernateImpl getINSTANCE() {
         return INSTANCE;
@@ -74,7 +74,9 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session = sessionFactory.openSession();
             session.getTransaction().begin();
-            session.persist(new User(name, lastName, age));
+            User user = new User(name, lastName, age);
+            user.setId(null);
+            session.persist(user);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -106,10 +108,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Session session = null;
+        List<User> userList;
         try {
             session = sessionFactory.openSession();
             session.getTransaction().begin();
-            List<User> userList = session.createQuery(GET_ALL_USERS_SQL, User.class).getResultList();
+            userList = session.createQuery(GET_ALL_USERS_SQL, User.class).getResultList();
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
@@ -120,7 +123,7 @@ public class UserDaoHibernateImpl implements UserDao {
         }
 
 
-        return null;
+        return userList;
     }
 
     @Override
