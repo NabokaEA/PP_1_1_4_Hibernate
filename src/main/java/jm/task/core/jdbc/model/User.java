@@ -3,20 +3,23 @@ package jm.task.core.jdbc.model;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
+@NamedQueries({
+        @NamedQuery(name = "User.findAll", query = "SELECT a FROM User a"),
+})
 public class User {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name="ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    @Column (name="NAME")
+    @Column(name = "NAME")
     private String name;
 
-    @Column (name="LAST_NAME")
+    @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column (name="AGE")
+    @Column(name = "AGE")
     private Byte age;
 
     public User() {
