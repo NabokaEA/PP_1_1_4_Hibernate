@@ -42,7 +42,8 @@ public class UserDaoHibernateImpl implements UserDao {
             if (null != transaction) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            System.out.println("При создании таблицы произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
     }
 
@@ -57,7 +58,8 @@ public class UserDaoHibernateImpl implements UserDao {
             if (null != transaction) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            System.out.println("При удалении таблицы произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
     }
 
@@ -74,7 +76,8 @@ public class UserDaoHibernateImpl implements UserDao {
             if (null != transaction) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            System.out.println("При сохранении пользователя произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
     }
 
@@ -90,24 +93,19 @@ public class UserDaoHibernateImpl implements UserDao {
             if (null != transaction) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            System.out.println("При удалении пользователя произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
     }
 
     @Override
     public List<User> getAllUsers() {
-        List<User> userList;
-        Transaction transaction = null;
+        List<User> userList = null;
         try (Session session = sessionFactory.openSession();) {
-            transaction = session.beginTransaction();
             userList = session.createNamedQuery("User.findAll").getResultList();
-            //userList = session.createNativeQuery(GET_ALL_USERS_SQL, User.class).getResultList();
-            session.getTransaction().commit();
         } catch (HibernateException e) {
-            if (null != transaction) {
-                transaction.rollback();
-            }
-            throw new RuntimeException(e);
+            System.out.println("При получении списка всех пользователей произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
         return userList;
     }
@@ -123,7 +121,8 @@ public class UserDaoHibernateImpl implements UserDao {
             if (null != transaction) {
                 transaction.rollback();
             }
-            throw new RuntimeException(e);
+            System.out.println("При очистке таблицы пользователей произошла исключительная ситуация");
+            System.out.println(e.getStackTrace());
         }
     }
 }
