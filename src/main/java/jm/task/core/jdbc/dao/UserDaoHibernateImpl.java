@@ -37,7 +37,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession();) {
             transaction = session.beginTransaction();
             session.createSQLQuery(CREATE_USERS_TABLE_SQL).addEntity(User.class).executeUpdate();
-            session.getTransaction().commit();
+            transaction.commit();
         } catch (HibernateException e) {
             if (null != transaction) {
                 transaction.rollback();
@@ -53,7 +53,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession();) {
             transaction = session.beginTransaction();
             session.createSQLQuery(DROP_USERS_TABLE_SQL).addEntity(User.class).executeUpdate();
-            session.getTransaction().commit();
+            transaction.commit();
         } catch (HibernateException e) {
             if (null != transaction) {
                 transaction.rollback();
@@ -71,7 +71,7 @@ public class UserDaoHibernateImpl implements UserDao {
             User user = new User(name, lastName, age);
             user.setId(null);
             session.persist(user);
-            session.getTransaction().commit();
+            transaction.commit();
         } catch (HibernateException e) {
             if (null != transaction) {
                 transaction.rollback();
@@ -88,7 +88,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction = session.beginTransaction();
             User user = session.getReference(User.class, id);
             session.remove(user);
-            session.getTransaction().commit();
+            transaction.commit();
         } catch (HibernateException e) {
             if (null != transaction) {
                 transaction.rollback();
@@ -116,7 +116,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession();) {
             transaction = session.beginTransaction();
             session.createQuery("DELETE FROM User").executeUpdate();
-            session.getTransaction().commit();
+            transaction.commit();
         } catch (HibernateException e) {
             if (null != transaction) {
                 transaction.rollback();
